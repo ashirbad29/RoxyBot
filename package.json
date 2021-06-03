@@ -3,9 +3,13 @@
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
+	"config": {
+		"port": "8080"
+	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"dev": "nodemon index.js"
+		"dev": "nodemon index.js",
+		"start": "node index.js"
 	},
 	"keywords": [],
 	"author": "",
@@ -17,5 +21,8 @@
 	},
 	"devDependencies": {
 		"nodemon": "^2.0.7"
+	},
+	"engines": {
+		"node": "14.17.0"
 	}
 }
