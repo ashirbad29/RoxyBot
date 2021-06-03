@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const dotenv = require('dotenv');
+const { prefix } = require('./config.json');
 const client = new Discord.Client();
 
 dotenv.config();
@@ -9,8 +10,8 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-	if (msg.content === 'ping') {
-		msg.reply('Pong!');
+	if (msg.content === `${prefix}hello`) {
+		msg.reply('Yo, Hope your doing fine!');
 	}
 });
 
