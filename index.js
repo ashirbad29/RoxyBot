@@ -2,12 +2,13 @@ const Discord = require('discord.js');
 const dotenv = require('dotenv');
 // const getQuote = require('./apiCalls.js');
 const fetch = require('node-fetch');
+// const { prefix } = require('./config.json');
 
-const { prefix } = require('./config.json');
 const client = new Discord.Client();
 
 dotenv.config();
 
+const prefix = ';';
 const getQuote = () => {
 	// @ts-ignore
 	return fetch('https://zenquotes.io/api/random')
