@@ -1,11 +1,9 @@
+// @ts-nocheck
 const Discord = require('discord.js');
 const dotenv = require('dotenv');
-// const getQuote = require('./apiCalls.js');
 const fetch = require('node-fetch');
-// const { prefix } = require('./config.json');
 
 const client = new Discord.Client();
-
 dotenv.config();
 
 const prefix = ';';
@@ -23,18 +21,40 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-	if (msg.content === `${prefix}hello`) {
-		msg.reply('Yo, Hope you are doing fine!');
-	} else if (msg.content === `${prefix}clear`) {
-		// console.log('hello');
+	if (!msg.content.startsWith(prefix) || msg.author.bot) return;
+
+	const args = msg.content.slice(prefix.length).trim().split(/ +/);
+	const command = args.shift().toLowerCase();
+	console.log(args, command);
+
+	if (command === 'args-info') {
+		if (!args.length) {
+			return msg.channel.send(
+				`You didn't provide any arguments, ${msg.author}!`
+			);
+		}
+
+		return msg.channel.send(`Command name: ${command}\nArguments: ${args}`);
+	}
+
+	if (command === 'hello') {
+		return msg.reply('Yo, Hope you are doing fine!');
+	} else if (command === 'clear') {
 		msg.channel.messages.fetch().then(messages => {
-			messages.forEach(m => {
-				m.delete();
-			});
+			let limit = messages.size;
+			if (args[0] && parseInt(args[0]) < messages.size) {
+				limit = args[0];
+			}
+
+			const iterator = messages.values();
+			for (let i = 1; i <= limit; i++) {
+				const msgToDel = iterator.next().value;
+				console.log('deleting message: ', msgToDel.content);
+				msgToDel.delete();
+			}
 		});
-	} else if (msg.content === `${prefix}inspire`) {
+	} else if (command === 'inspire') {
 		console.log('called');
-		// @ts-ignore
 		getQuote().then(quote => msg.channel.send(quote));
 	}
 });
